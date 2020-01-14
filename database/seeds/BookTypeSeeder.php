@@ -11,8 +11,6 @@ class BookTypeSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\BookType::class, 1)->create()->each(function ($user) {
-            $user->posts()->save(factory(App\BookType::class)->make());
-        });
+        factory(App\Model\Book\BookType::class, 50)->create();
     }
 }
