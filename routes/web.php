@@ -10,7 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+# 请求统计分析
+Route::prefix('admin')->group(function ()
+{
 
-Route::get('/', function () {
-    return view('welcome');
 });
