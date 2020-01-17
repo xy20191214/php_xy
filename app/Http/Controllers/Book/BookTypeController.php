@@ -2,12 +2,23 @@
 
 namespace App\Http\Controllers\Book;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+use App\Library\Base\Controller,
+    App\Model\Book\BookType;
 
 class BookTypeController extends Controller
 {
-    public function getList()
+    public function handles(Request $request)
     {
-        return 123;
+        // 操作指针
+        $func = $this->outs($request->server('REQUEST_METHOD'));
+
+        return $this->result(200, $func);
+    }
+
+    public function gets()
+    {
+        return 1;
     }
 }
