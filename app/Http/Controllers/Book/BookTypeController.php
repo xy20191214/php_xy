@@ -9,16 +9,18 @@ use App\Library\Base\Controller,
 
 class BookTypeController extends Controller
 {
+    public $data;
+
+    public function __construct(BookType $data)
+    {
+        $this->data = $data;
+    }
+
     public function handles(Request $request)
     {
         // 操作指针
         $func = $this->outs($request->server('REQUEST_METHOD'));
 
-        return $this->result(200, $func);
-    }
-
-    public function gets()
-    {
-        return 1;
+        return $this->result(200, $this->data->$func(10000, 0));
     }
 }

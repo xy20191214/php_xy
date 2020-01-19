@@ -17,7 +17,7 @@ class CreateXyBookTypeTable extends Migration
         {
             $table->increments('id')->comment('主键');
             $table->unsignedInteger('pid')->default(0)->comment('父类id');
-            $table->unsignedInteger('uid')->default(0)->comment('用户id');
+            $table->unsignedInteger('uid')->default(10000)->comment('用户id');
             $table->string('title', 100)->comment('标题');
             $table->string('remark', 200)->comment('备注');
             $table->unsignedInteger('sort')->default(1)->comment('排序');

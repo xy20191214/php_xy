@@ -20,7 +20,7 @@ class Controller extends BaseController
      */
     public function outs($key)
     {
-        return ['PUT' => 'adds','GET' => 'lists', 'POST' => 'adds', 'DELETE' => 'adds'][$key];
+        return ['PUT' => 'adds','GET' => 'lists', 'POST' => 'adds', 'DELETE' => 'deletes'][$key];
     }
 
     /**
