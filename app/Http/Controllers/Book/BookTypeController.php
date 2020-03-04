@@ -20,7 +20,8 @@ class BookTypeController extends Controller
     {
         // 操作指针
         $func = $this->outs($request->server('REQUEST_METHOD'));
+        $id = $request->id ?? 0;
 
-        return $this->result(200, $this->data->$func(10000, 0));
+        return $this->result(200, $this->data->$func(10000, $id));
     }
 }

@@ -6,6 +6,7 @@ namespace App\Library\Tool;
 
 trait Crypt
 {
+    public $res;
     public $en = ['c', 'd', 'z', 'y', 'a', 'o', 'm', 'e', 'l', 't', 'c', 'd', 'z', 'y', 'a', 'o']; // 英文码
     public $int = ['c' => 0, 'd' => 1, 'z' => 2, 'y' => 3, 'a' => 4, 'o' => 5, 'm' => 6, 'e' => 7, 'l' => 8, 't' => 9]; // 数字码
     public $rand = ['b', 'f', 'g', 'h', 'i', 'j', 'k', 'n', 'p', 'q', 'r', 's', 'u', 'v', 'w', 'x']; // 逗号上述没出现
@@ -41,12 +42,28 @@ trait Crypt
      */
     public function decryptField($str)
     {
-        $result = '';
-        for ($i = 0; $i < strlen($str); $i++)
+        if (! $str) $this->res = $str;
+        else
         {
-            $result .= is_numeric($str[$i]) ? $this->en[$str[$i]] : (isset($this->int[$str[$i]]) ? $this->int[$str[$i]] : ',');
+            $result = '';
+            for ($i = 0; $i < strlen($str); $i++)
+            {
+                $result .= is_numeric($str[$i]) ? $this->en[$str[$i]] : (isset($this->int[$str[$i]]) ? $this->int[$str[$i]] : ',');
+            }
+
+            $this->res = $result;
         }
 
-        return $result;
+        return $this;
+    }
+
+    /**
+     * 直接获取值
+     * @return mixed
+     */
+    public function toValue($i = 1)
+    {
+        if (! $this->res) return $this->res;
+        return explode(',', $this->res)[$i];
     }
 }
