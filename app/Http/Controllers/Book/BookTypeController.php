@@ -9,19 +9,28 @@ use App\Library\Base\Controller,
 
 class BookTypeController extends Controller
 {
-    public $data;
+    public $booktype;
 
-    public function __construct(BookType $data)
+    public function __construct(BookType $booktype)
     {
-        $this->data = $data;
+        $this->booktype = $booktype;
     }
 
     public function handles(Request $request)
     {
         // 操作指针
-        $func = $this->outs($request->server('REQUEST_METHOD'));
-        $id = $request->id ?? 0;
+        $func = $this->outs($request->getMethod());
+        $request->id = $request->id ?? 0;
+        $request->uid = 10000;
+        $request->func = $func;
 
-        return $this->result(200, $this->data->$func(10000, $id));
+        // 添加 && 修改标题不能为空
+        if ($func == 'adds')
+        {
+            $request->pid = $request->pid ?? '';
+            if (! $request->title) return $this->result(10000);
+        }
+
+        return $this->result(200, $this->booktype->$func($request));
     }
 }

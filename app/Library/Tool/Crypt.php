@@ -42,8 +42,7 @@ trait Crypt
      */
     public function decryptField($str)
     {
-        if (! $str) $this->res = $str;
-        else
+        if ($str)
         {
             $result = '';
             for ($i = 0; $i < strlen($str); $i++)
@@ -52,7 +51,8 @@ trait Crypt
             }
 
             $this->res = $result;
-        }
+        }else
+            $this->res = $str;
 
         return $this;
     }
@@ -64,6 +64,9 @@ trait Crypt
     public function toValue($i = 1)
     {
         if (! $this->res) return $this->res;
-        return explode(',', $this->res)[$i];
+        $exp = explode(',', $this->res);
+        if (count($exp) - 1 < $i) return false;
+
+        return $exp[$i];
     }
 }

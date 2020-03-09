@@ -8,25 +8,42 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class BookType extends BaseModel
 {
     use SoftDeletes; // 软删除
+    public $timestamps = true;
 
     public $table = "book_type";
     protected $appends = ['children'];
 
     /**
-     * 获取type列表
-     * @param $uid
-     * @param $pid
+     * 添加修改数据
      * @return mixed
      */
-    public function lists($uid, $pid)
+    public function adds($request)
     {
-        $pid = $this->decryptField($pid)->toValue();
+        // 判断id，有修改，无添加
+        $save = $this->where('id', $request->id)->first() ?? $this;
 
-        return self::where('uid', $uid)
+        $save->title = $request->title;
+        $request->pid !== '' && $save->pid = $request->pid; // 判断添加子集
+
+        return $save->save();
+    }
+
+    /**
+     * 获取type列表
+     * @param $request 参数
+     * @param $uid uid
+     * @return mixed
+     */
+    public function lists($request)
+    {
+        $pid = $this->decryptField($request->id)->toValue();
+        if ($pid === false) return [];
+
+        return self::where('uid', $request->uid)
             ->where('pid', $pid)
             ->orderBy('sort', 'desc')
             ->orderBy('create_time', 'desc')
-            ->get(['id', 'title as label', 'remark', 'create_time']);
+            ->get(['id', 'title', 'remark', 'create_time']);
             //->makeHidden('id'); // 隐藏字段
     }
 
