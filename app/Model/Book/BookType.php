@@ -40,6 +40,7 @@ class BookType extends BaseModel
         if ($pid === false) return [];
 
         return self::where('uid', $request->uid)
+            //->limit(20)
             ->where('pid', $pid)
             ->orderBy('sort', 'desc')
             ->orderBy('create_time', 'desc')

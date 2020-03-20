@@ -22,7 +22,6 @@ class BookTypeController extends Controller
         $func = $this->outs($request->getMethod());
         $request->id = $request->id ?? 0;
         $request->uid = 10000;
-        $request->func = $func;
 
         // 添加 && 修改标题不能为空
         if ($func == 'adds')
