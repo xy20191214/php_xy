@@ -16,4 +16,9 @@ class BaseModel extends Model
     protected $casts = [
         'create_time' => 'date:Y-m-d H:i:s',
     ];
+
+    public function customPage($id, $limit = 10)
+    {
+        return $this->where('id', '>', $id)->limit($limit ? $limit : 10);
+    }
 }

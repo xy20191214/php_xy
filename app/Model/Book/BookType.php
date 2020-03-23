@@ -13,6 +13,7 @@ class BookType extends BaseModel
     public $table = "book_type";
     protected $appends = ['children'];
 
+
     /**
      * 添加修改数据
      * @return mixed
@@ -28,6 +29,7 @@ class BookType extends BaseModel
         return $save->save();
     }
 
+
     /**
      * 获取type列表
      * @param $request 参数
@@ -39,8 +41,8 @@ class BookType extends BaseModel
         $pid = $this->decryptField($request->id)->toValue();
         if ($pid === false) return [];
 
-        return self::where('uid', $request->uid)
-            //->limit(20)
+        return self::customPage($request->id, $request->limit)
+            ->where('uid', $request->uid)
             ->where('pid', $pid)
             ->orderBy('sort', 'desc')
             ->orderBy('create_time', 'desc')
