@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Book;
+namespace App\Model\BookType;
 
 use App\Library\Base\BaseModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,7 +12,6 @@ class BookType extends BaseModel
 
     public $table = "book_type";
     protected $appends = ['children'];
-
 
     /**
      * 添加修改数据
@@ -36,18 +35,18 @@ class BookType extends BaseModel
      * @param $uid uid
      * @return mixed
      */
-    public function lists($request)
+    public function lists($params)
     {
-        $pid = $this->decryptField($request->id)->toValue();
-        if ($pid === false) return [];
+        $pch = $this->decryptField($params->pch)->toValue();
+        if ($pch === false) return [];
 
-        return self::customPage($request->id, $request->limit)
-            ->where('uid', $request->uid)
-            ->where('pid', $pid)
+        $row = $this->where('uid', $params->uid)
+            ->where('pid', $pch)
             ->orderBy('sort', 'desc')
             ->orderBy('create_time', 'desc')
-            ->get(['id', 'title', 'remark', 'create_time']);
-            //->makeHidden('id'); // 隐藏字段
+            ->paginate($params->limit, ['id', 'title', 'remark', 'create_time']);
+
+        return $row;
     }
 
     /**

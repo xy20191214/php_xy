@@ -14,16 +14,6 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
-     * 统一分发
-     * @return mixed
-     * @author cy
-     */
-    public function outs($key)
-    {
-        return ['PUT' => 'adds','GET' => 'lists', 'POST' => 'adds', 'DELETE' => 'deletes'][$key];
-    }
-
-    /**
      * 返回结果
      * @param int $code json状态码
      * @param array $data 返回的数据

@@ -5,7 +5,7 @@
 use App\Model;
 use Faker\Generator as Faker;
 
-$factory->define(App\Model\Book\BookType::class, function (Faker $faker) {
+$factory->define(App\Model\BookType\BookType::class, function (Faker $faker) {
     return [
         'title' => $faker->name,
         'remark' => $faker->text(100),

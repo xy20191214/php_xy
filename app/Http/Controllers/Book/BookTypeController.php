@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Book;
 use Illuminate\Http\Request;
 
 use App\Library\Base\Controller,
-    App\Model\Book\BookType;
+    App\Model\BookType\BookType,
+    App\Model\BookType\BookTypeValidator;
 
 class BookTypeController extends Controller
 {
@@ -16,20 +17,18 @@ class BookTypeController extends Controller
         $this->booktype = $booktype;
     }
 
-    public function handles(Request $request)
+    public function iGet(Request $re, BookTypeValidator $validator)
     {
         // 操作指针
-        $func = $this->outs($request->getMethod());
-        $request->id = $request->id ?? 0;
-        $request->uid = 10000;
+        $params = $validator->iGet($re);
+        $params->uid = 10000;
 
-        // 添加 && 修改标题不能为空
-        if ($func == 'adds')
-        {
-            $request->pid = $request->pid ?? '';
-            if (! $request->title) return $this->result(10000);
-        }
+        return $this->result(200, $this->booktype->lists($params));
+    }
 
-        return $this->result(200, $this->booktype->$func($request));
+    public function iSave()
+    {
+        $request->pid = $request->pid ?? '';
+        if (! $request->title) return $this->result(10000);
     }
 }
