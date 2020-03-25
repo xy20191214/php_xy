@@ -19,8 +19,8 @@ class ValidatorBase
 
     /**
      * 设置默认值
-     * @param $key
-     * @param $val
+     * @param $key 默认值键名
+     * @param $val 默认值
      * @return $this
      */
     public function default($key, $val)
@@ -34,7 +34,7 @@ class ValidatorBase
     }
 
     /**
-     * 不是假切被设置
+     * 不是假，且被设置
      * @param $key 键名
      * @return bool
      */

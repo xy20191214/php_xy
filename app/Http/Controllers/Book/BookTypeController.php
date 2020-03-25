@@ -19,7 +19,6 @@ class BookTypeController extends Controller
 
     public function iGet(Request $re, BookTypeValidator $validator)
     {
-        // 操作指针
         $params = $validator->iGet($re);
         $params->uid = 10000;
 
