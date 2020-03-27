@@ -1,9 +1,12 @@
 <?php
 namespace App\Library\Base;
 
+
 class ValidatorBase
 {
     protected $params; // 请求参数
+    protected $error = false; // 返回错误
+    protected $errorCode = 0; // 错误码
 
     /**
      * 设置数据
@@ -48,6 +51,34 @@ class ValidatorBase
      */
     public function result()
     {
+        if ($this->error) return $this;
+
         return $this->params;
+    }
+
+    /**
+     * 是否为空
+     * @param $key 键名
+     * @return $this
+     */
+    public function isempty($key)
+    {
+        ! $this->notFlase($key) && $this->error(10000);
+
+        return  $this;
+    }
+
+    /**
+     * 设置错误
+     * @param int $code 错误码
+     */
+    public function error($code = 404)
+    {
+        $this->error = function() use ($code)
+        {
+            return 12;
+        };
+//        $this->error = true;
+//        $this->errorCode = $code;
     }
 }

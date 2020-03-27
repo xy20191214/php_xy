@@ -12,4 +12,15 @@ class BookTypeValidator extends ValidatorBase
             ->default('limit', 10)
             ->result();
     }
+
+    public function iSave($re)
+    {
+        $params = $this->params($re->all())
+            ->default('ch', 0)
+            ->default('pch', 0)
+            ->isempty('title')
+            ->result();
+        dd($params);
+        return 1;
+    }
 }

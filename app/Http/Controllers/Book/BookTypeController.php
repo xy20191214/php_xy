@@ -25,9 +25,11 @@ class BookTypeController extends Controller
         return $this->result(200, $this->booktype->lists($params));
     }
 
-    public function iSave()
+    public function iSave(Request $re, BookTypeValidator $validator)
     {
-        $request->pid = $request->pid ?? '';
+        $params = $validator->iSave($re);
+        dd($params);
+        $this->booktype->adds($re);
         if (! $request->title) return $this->result(10000);
     }
 }
