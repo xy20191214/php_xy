@@ -23,6 +23,9 @@ class Controller extends BaseController
      */
     public function result(int $code = 200, $data = [], int $status = 200, $file = 'common')
     {
+        // 使用的http状态码
+        if (in_array($code, [201, 204])) $status = $code;
+
         $result = '';
         if ($status === 200)
         {

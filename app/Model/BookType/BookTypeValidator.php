@@ -5,22 +5,37 @@ use App\Library\Base\ValidatorBase;
 
 class BookTypeValidator extends ValidatorBase
 {
-    public function iGet($re)
+    /**
+     * 设置接收参数
+     */
+    public function __construct()
     {
-        return $this->params($re->all())
-            ->default('pch', 0)
-            ->default('limit', 10)
-            ->result();
+        $this->params(request()->all());
     }
 
-    public function iSave($re)
+    /**
+     * 验证
+     * @return mixed
+     */
+    public function iGet()
     {
-        $params = $this->params($re->all())
-            ->default('ch', 0)
+        return $this->default('pch', 0)
+            ->default('limit', 10)
+            ->result()->params;
+    }
+
+
+    /**
+     * 验证
+     * @return mixed
+     */
+    public function iSave()
+    {
+        $params = $this->default('ch', 0)
             ->default('pch', 0)
             ->isempty('title')
             ->result();
-        dd($params);
-        return 1;
+
+        return $params;
     }
 }

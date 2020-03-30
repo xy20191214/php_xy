@@ -17,13 +17,13 @@ class BookType extends BaseModel
      * 添加修改数据
      * @return mixed
      */
-    public function adds($request)
+    public function adds($param)
     {
         // 判断id，有修改，无添加
-        $save = $this->where('id', $request->id)->first() ?? $this;
+        $save = $this->where('id', $param->ch)->first() ?? $this;
 
-        $save->title = $request->title;
-        $request->pid !== '' && $save->pid = $request->pid; // 判断添加子集
+        $save->title = $param->title;
+        $save->pid = $param->pch;
 
         return $save->save();
     }

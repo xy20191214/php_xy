@@ -1,12 +1,14 @@
 <?php
 namespace App\Library\Base;
 
+use App\Library\Error\ValidatorError;
 
 class ValidatorBase
 {
-    protected $params; // 请求参数
-    protected $error = false; // 返回错误
-    protected $errorCode = 0; // 错误码
+    public $params; // 请求参数
+    public $error; // 错误类
+    public $pass = false; // 错误
+    public $code; // 错误码
 
     /**
      * 设置数据
@@ -47,13 +49,11 @@ class ValidatorBase
     }
 
     /**
-     * 获取结果
+     * 直接返回结果
      */
     public function result()
     {
-        if ($this->error) return $this;
-
-        return $this->params;
+        return $this;
     }
 
     /**
@@ -74,11 +74,16 @@ class ValidatorBase
      */
     public function error($code = 404)
     {
-        $this->error = function() use ($code)
+        $this->pass = true;
+        $this->error = new ValidatorError($code); // 错误类
+
+        $func = function ()
         {
-            return 12;
+            return $this->error->errorCode;
         };
-//        $this->error = true;
-//        $this->errorCode = $code;
+
+        $this->code = $func();
+
+        return $this;
     }
 }

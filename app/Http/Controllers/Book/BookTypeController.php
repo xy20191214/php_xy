@@ -10,26 +10,28 @@ use App\Library\Base\Controller,
 
 class BookTypeController extends Controller
 {
-    public $booktype;
+    public $booktype; // mysql数据模型
+    public $ver; // 验证
 
-    public function __construct(BookType $booktype)
+    public function __construct(BookType $booktype, BookTypeValidator $validator)
     {
         $this->booktype = $booktype;
+        $this->ver = $validator;
     }
 
-    public function iGet(Request $re, BookTypeValidator $validator)
+    public function iGet()
     {
-        $params = $validator->iGet($re);
+        $params = $this->ver->iGet();
         $params->uid = 10000;
 
         return $this->result(200, $this->booktype->lists($params));
     }
 
-    public function iSave(Request $re, BookTypeValidator $validator)
+    public function iSave()
     {
-        $params = $validator->iSave($re);
-        dd($params);
-        $this->booktype->adds($re);
-        if (! $request->title) return $this->result(10000);
+        $param = $this->ver->iSave();
+        if ($param->pass) return $this->result($param->code);
+
+        return $this->booktype->adds($param->params) ? $this->result(201) : $this->result(10000);
     }
 }
