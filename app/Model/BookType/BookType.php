@@ -43,7 +43,7 @@ class BookType extends BaseModel
         $row = $this->where('uid', $params->uid)
             ->where('pid', $pch)
             ->orderBy('sort', 'desc')
-            ->orderBy('create_time', 'desc')
+            ->orderBy('id', 'asc')
             ->paginate($params->limit, ['id', 'title', 'remark', 'create_time']);
 
         return $row;
