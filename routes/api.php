@@ -1,19 +1,14 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// 笔记相关
+Route::prefix('book')->group(function ()
+{
+    // 书籍目录
+    Route::prefix('catalog')->namespace('Book')->group(function ()
+    {
+        // 列表展示、添加、修改与删除
+        Route::match(['post', 'put'], '/handle', 'BookCatalogController@write')->name('book.catalog.write');
+        Route::delete('/handle', 'BookCatalogController@remove')->name('book.catalog.remove');
+        Route::get('/handle', 'BookCatalogController@read')->name('book.catalog.read');
+    });
 });
