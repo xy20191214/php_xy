@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Book;
 
-use App\Http\Controllers\Controller,
-    App\Models\Mysql\Book;
+use App\Http\Controllers\BaseController,
+    App\Models\Mysql\Book\BookCatalog,
+    App\Plugins\Validator\BookValidator;
 
 use Illuminate\Http\Request;
 
-class BookCatalogController extends Controller
+class BookCatalogBaseController extends BaseController
 {
-    public $book; // mysql数据模型
-    public $ver; // 验证
+    public $bc; // mysql数据模型
+    public $bv; // 验证
 
-    public function __construct(Book $book, BookTypeValidator $validator)
+    public function __construct(BookCatalog $bc, BookValidator $bv)
     {
-        $this->Book = $book;
-        $this->ver = $validator;
+        $this->bc = $bc;
+        $this->bv = $bv;
     }
 
     public function read()
@@ -33,7 +34,7 @@ class BookCatalogController extends Controller
 
     public function write()
     {
-        $param = $this->ver->iSave();
+        $param = $this->bv->write();dd($param);
         if ($param->pass) return $this->result($param->code);
 
         return $this->booktype->adds($param->params) ? $this->result(201) : $this->result(10000);
