@@ -9,7 +9,7 @@ class BookValidator extends ValidatorBase
      */
     public function write()
     {
-        $params = $this->not('title')->length('title', 100, 1);
+        $params = $this->must(['type', 'title'])->length('title', 100, 1);
 
         return $params;
     }

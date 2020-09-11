@@ -15,6 +15,32 @@ class ValidatorBase
     }
 
     /**
+     * 前置方法
+     * @return $this
+     */
+    public function before()
+    {
+        if ($this->pass) return $this;
+
+        return false;
+    }
+
+    /**
+     * 必填项
+     * @param array $keys
+     * @return $this
+     */
+    public function isMust(array $keys)
+    {
+        foreach ($keys as $v)
+        {
+            if (! $this->notFlase($v)) return $this->error([10000, $v]);
+        }
+
+        return $this;
+    }
+
+    /**
      * 设置数据
      * @param $params 数据
      * @return $this
@@ -22,24 +48,6 @@ class ValidatorBase
     public function params($params)
     {
         is_array($params) && $this->params = (object)$params;
-
-        return $this;
-    }
-
-    /**
-     * 设置默认值
-     * @param $key 默认值键名
-     * @param $val 默认值
-     * @return $this
-     */
-    public function default($key, $val)
-    {
-        if (! $this->notFlase($key))
-        {
-            $this->params->$key = $val;
-        }
-
-        return $this;
     }
 
     /**
@@ -53,27 +61,14 @@ class ValidatorBase
     }
 
     /**
-     * 是否为空
-     * @param $key 键名
-     * @return $this
-     */
-    public function not($key)
-    {
-        ! $this->notFlase($key) && $this->error([10000, $key]);
-        die;
-        return $this;
-    }
-
-    /**
      * 长度
      * @param $key 键名
      * @param $max 最大长度
      * @param $min 最小长度
      * @return $this
      */
-    public function length($key, $max, $min)
+    public function isLength($key, $max, $min)
     {
-        $this->not($key);
         $len = strlen($this->params->$key);
 
         $len < $min && $this->error([10001, $key, $max]);
@@ -93,5 +88,16 @@ class ValidatorBase
         $this->code = $code;
 
         return $this;
+    }
+
+    public function __call($method, $params)
+    {
+        if (! method_exists($this, $method))
+        {
+            $temp = $this->before();
+            if ($temp) return $temp;
+            $method = 'is' . ucfirst($method);
+            return $this->$method(...$params);
+        }
     }
 }

@@ -14,6 +14,7 @@ class ErrorMessages
     const C_SUB_STR_MAX = 10002;
 
     const C_RE_TITLE = 'title';
+    const C_RE_TYPE = 'type';
 
     const C_MESSAGE = [
         self::C_SUCCESS => '请求成功',
@@ -27,6 +28,7 @@ class ErrorMessages
     ];
 
     const C_MESSAGE_REPLACE = [
-        self::C_RE_TITLE => '标题'
+        self::C_RE_TITLE => '标题',
+        self::C_RE_TYPE => '类型'
     ];
 }

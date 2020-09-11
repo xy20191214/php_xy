@@ -8,7 +8,7 @@ use App\Http\Controllers\BaseController,
 
 use Illuminate\Http\Request;
 
-class BookCatalogBaseController extends BaseController
+class BookCatalogController extends BaseController
 {
     public $bc; // mysql数据模型
     public $bv; // 验证
@@ -34,9 +34,9 @@ class BookCatalogBaseController extends BaseController
 
     public function write()
     {
-        $param = $this->bv->write();dd($param);
+        $param = $this->bv->write();
         if ($param->pass) return $this->result($param->code);
-
+        dd($param);
         return $this->booktype->adds($param->params) ? $this->result(201) : $this->result(10000);
     }
 }
