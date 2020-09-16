@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Mysql\Book;
+namespace App\Models\Mysql;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +10,6 @@ class BookCatalog extends Model
 
     public function write()
     {
-
+        return $this->get();
     }
 }

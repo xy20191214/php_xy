@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Book;
 
 use App\Http\Controllers\BaseController,
-    App\Models\Mysql\Book\BookCatalog,
+    App\Models\Repository\Book\BookCatalog,
     App\Plugins\Validator\BookValidator;
 
 use Illuminate\Http\Request;
@@ -36,7 +36,7 @@ class BookCatalogController extends BaseController
     {
         $param = $this->bv->write();
         if ($param->pass) return $this->result($param->code);
-        dd($param);
-        return $this->booktype->adds($param->params) ? $this->result(201) : $this->result(10000);
+        dd(BookCatalog::write());
+        return $this->booktype->write($param->params) ? $this->result(201) : $this->result(10000);
     }
 }
