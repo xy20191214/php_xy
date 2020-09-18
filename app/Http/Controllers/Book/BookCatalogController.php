@@ -36,7 +36,7 @@ class BookCatalogController extends BaseController
     {
         $param = $this->bv->write();
         if ($param->pass) return $this->result($param->code);
-        dd(BookCatalog::write());
-        return $this->booktype->write($param->params) ? $this->result(201) : $this->result(10000);
+        dd($this->bc->write($param));
+        return $this->bc->write($param->params) ? $this->result(201) : $this->result(10000);
     }
 }

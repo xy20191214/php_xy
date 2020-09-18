@@ -6,11 +6,13 @@ use App\Models\Repository\BaseRepository;
 
 class BookCatalog extends BaseRepository
 {
+    public $db = 'Mysql';
+
     /**
      *
      */
-    public function write()
+    public function write($params)
     {
-        return $this->a('Mysql');
+        return $this->save($params);
     }
 }

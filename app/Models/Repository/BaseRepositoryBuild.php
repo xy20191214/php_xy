@@ -4,18 +4,17 @@ namespace App\Models\Repository;
 
 class BaseRepositoryBuild
 {
-    /**
-     * 设置存储媒介种类
-     */
-    public function db($db)
-    {
-        $this->db = $db;
+    public $model;
 
-        return $this;
+    public function __construct($db, $class)
+    {
+        $namespace = "\\App\\Models\\" . $db . "\\" . substr($class, strrpos($class, "\\") + 1);
+        $this->model = new $namespace;
     }
 
-    public function a()
+    public function save($params)
     {
-        return 1;
+        ($id = $params->isId()) && $this->model = $this->model->find($id);
+        dd($params->isId(),$this->model->where([]));
     }
 }

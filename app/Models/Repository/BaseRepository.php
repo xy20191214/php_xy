@@ -2,25 +2,24 @@
 
 namespace App\Models\Repository;
 
-use ReflectionClass;
 use App\Models\Repository\BaseRepositoryBuild;
 
 class BaseRepository
 {
     public $db = 'Mysql'; // 存储媒介种类
 
-    public function __construct()
-    {
-        echo 1;die;
-    }
-
     /**
      * 设置存储媒介种类
      */
-    private function query($method)
+    private function query($method, $params)
     {
-        $class = new BaseRepositoryBuild;dd($method,$class->a());
-        return new BaseRepositoryBuild;
+        $build = new BaseRepositoryBuild($this->db, get_class($this));
+        return $build->$method($params);
+    }
+
+    public function __call($method, $params)
+    {
+        return $this->query($method, ...$params);
     }
 
     public static function __callStatic($method, $params)
