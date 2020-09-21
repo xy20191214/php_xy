@@ -9,10 +9,14 @@ class BookCatalog extends BaseRepository
     public $db = 'Mysql';
 
     /**
-     *
+     * 写入数据
      */
     public function write($params)
     {
-        return $this->save($params);
+        return $this->cmn($params) // 简易模式
+            ->uid()
+            ->id()
+            ->status(-3, '!=')
+            ->save();
     }
 }

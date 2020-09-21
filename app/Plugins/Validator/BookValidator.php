@@ -13,4 +13,12 @@ class BookValidator extends ValidatorBase
 
         return $params;
     }
+
+    /**
+     * 验证id
+     */
+    public function verId()
+    {
+        return $this->must(['type', 'title'])->length('title', 100, 1)->end(['id']);
+    }
 }

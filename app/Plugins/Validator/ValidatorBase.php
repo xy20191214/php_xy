@@ -6,11 +6,14 @@ abstract class ValidatorBase
     public $pass = false; // 错误
     public $need; // 需要的数组
 
+    private $uid;
+
     /**
      * 设置接收参数
      */
     public function __construct()
     {
+        $this->uid = 10000;
         $this->params(request()->all());
     }
 
@@ -104,6 +107,14 @@ abstract class ValidatorBase
     public function isId($key = 'id')
     {
         return isset($this->$key) ? $this->$key : 0;
+    }
+
+    /**
+     * 获取uid
+     */
+    public function isUid()
+    {
+        return $this->uid;
     }
 
     /**

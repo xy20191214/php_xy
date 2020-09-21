@@ -29,14 +29,15 @@ class BookCatalogController extends BaseController
 
     public function remove()
     {
-
+        $param = $this->bv->write();
+        if ($param->pass) return $this->result($param->code);
     }
 
     public function write()
     {
         $param = $this->bv->write();
         if ($param->pass) return $this->result($param->code);
-        dd($this->bc->write($param));
-        return $this->bc->write($param->params) ? $this->result(201) : $this->result(10000);
+
+        return $this->bc->write($param) ? $this->result(201) : $this->result(10000);
     }
 }
