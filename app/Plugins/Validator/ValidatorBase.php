@@ -5,8 +5,9 @@ abstract class ValidatorBase
 {
     public $pass = false; // 错误
     public $need; // 需要的数组
+    public $code; // 状态码
 
-    private $uid;
+    private $uid; // 用户id
 
     /**
      * 设置接收参数
@@ -19,7 +20,7 @@ abstract class ValidatorBase
 
     /**
      * 前置方法
-     * @return $this
+     * @return bool|ValidatorBase
      */
     public function before()
     {
@@ -38,7 +39,7 @@ abstract class ValidatorBase
     {
         foreach ($keys as $v)
         {
-            if (! $this->notFlase($v)) return $this->error([10000, $v]);
+            if (! $this->notFlase($v)) return $this->error(1000);
         }
 
         return $this;
@@ -46,10 +47,10 @@ abstract class ValidatorBase
 
     /**
      * 设置数据
-     * @param $params 数据
-     * @return $this
+     * @param array $params [数据]
+     * @return void
      */
-    public function params($params)
+    public function params(array $params)
     {
         foreach ($params as $k => $v)
         {
@@ -59,7 +60,7 @@ abstract class ValidatorBase
 
     /**
      * 不是假，且被设置
-     * @param $key 键名
+     * @param $key [键名]
      * @return bool
      */
     public function notFlase($key)
@@ -69,9 +70,9 @@ abstract class ValidatorBase
 
     /**
      * 长度
-     * @param $key 键名
-     * @param $max 最大长度
-     * @param $min 最小长度
+     * @param $key [键名]
+     * @param $max [最大长度]
+     * @param $min [最小长度]
      * @return $this
      */
     public function isLength($key, $max, $min)
@@ -86,8 +87,8 @@ abstract class ValidatorBase
 
     /**
      * 结束闭环增加工具方法
-     * keys需要的参数
-     * @return $this
+     * @param $keys [keys需要的参数]
+     * @return ValidatorBase
      */
     public function end($keys)
     {
@@ -120,6 +121,7 @@ abstract class ValidatorBase
     /**
      * 设置错误
      * @param int $code 错误码
+     * @return ValidatorBase
      */
     public function error($code = 404)
     {

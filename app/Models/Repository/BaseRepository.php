@@ -7,11 +7,10 @@ class BaseRepository
     public $db = 'Mysql'; // 存储媒介种类
     public $model; // 实例
     public $where; // 条件
+    public $params; // 参数
 
     /**
      * 实例模型
-     * @param $db
-     * @param $class
      */
     public function __construct()
     {
@@ -48,8 +47,8 @@ class BaseRepository
 
     /**
      * 设置状态码
-     * @param $int 状态码
-     * @param string $ch 逻辑判断
+     * @param $int [状态码]
+     * @param string $ch [逻辑判断]
      * @return $this
      */
     public function status($int, $ch = '')
@@ -80,7 +79,7 @@ class BaseRepository
 
     /**
      * 设置处理数组
-     * @param string $ch
+     * @param $params
      * @return mixed
      */
     public function cmn($params)
@@ -118,6 +117,6 @@ class BaseRepository
 
     public function __call($method, $params)
     {
-        return $this->where($method, ...$params);
+        return $this->where($method);
     }
 }

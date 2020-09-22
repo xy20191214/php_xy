@@ -10,6 +10,8 @@ class BookCatalog extends BaseRepository
 
     /**
      * 写入数据
+     * @param $params
+     * @return $this
      */
     public function write($params)
     {

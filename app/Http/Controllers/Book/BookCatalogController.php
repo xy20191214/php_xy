@@ -6,8 +6,6 @@ use App\Http\Controllers\BaseController,
     App\Models\Repository\Book\BookCatalog,
     App\Plugins\Validator\BookValidator;
 
-use Illuminate\Http\Request;
-
 class BookCatalogController extends BaseController
 {
     public $bc; // mysql数据模型
@@ -21,21 +19,20 @@ class BookCatalogController extends BaseController
 
     public function read()
     {
-        $params = $this->ver->iGet();
-        $params->uid = 10000;
 
-        return $this->result(200, $this->booktype->lists($params));
     }
 
     public function remove()
     {
-        $param = $this->bv->write();
-        if ($param->pass) return $this->result($param->code);
+        $param = $this->bv->verId();
+        if ($param->pass) return $this->result($param->code);dd($param);
+
+        return 1;
     }
 
     public function write()
     {
-        $param = $this->bv->write();
+        $param = $this->bv->write();dd($param);
         if ($param->pass) return $this->result($param->code);
 
         return $this->bc->write($param) ? $this->result(201) : $this->result(10000);
