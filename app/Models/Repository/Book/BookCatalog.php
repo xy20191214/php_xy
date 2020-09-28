@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Models\Repository\Book;
 
 use App\Models\Repository\BaseRepository;
@@ -13,9 +14,9 @@ class BookCatalog extends BaseRepository
      * @param $params
      * @return $this
      */
-    public function write($params)
+    public function write($validator)
     {
-        return $this->cmn($params) // 简易模式
+        return $this->cmn($validator) // 简易模式
             ->uid()
             ->id()
             ->status(-3, '!=')

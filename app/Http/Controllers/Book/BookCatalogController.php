@@ -1,17 +1,18 @@
 <?php
 
+
 namespace App\Http\Controllers\Book;
 
 use App\Http\Controllers\BaseController,
     App\Models\Repository\Book\BookCatalog,
-    App\Plugins\Validator\BookValidator;
+    App\Plugins\Validator\Book\BookCatalogValidator;
 
 class BookCatalogController extends BaseController
 {
     public $bc; // mysql数据模型
     public $bv; // 验证
 
-    public function __construct(BookCatalog $bc, BookValidator $bv)
+    public function __construct(BookCatalog $bc, BookCatalogValidator $bv)
     {
         $this->bc = $bc;
         $this->bv = $bv;
@@ -24,17 +25,18 @@ class BookCatalogController extends BaseController
 
     public function remove()
     {
-        $param = $this->bv->verId();
-        if ($param->pass) return $this->result($param->code);dd($param);
+        $validator = $this->bv->verId();
+        if ($validator->pass) return $this->result($validator->code);
+        $validator->remove();
 
         return 1;
     }
 
     public function write()
     {
-        $param = $this->bv->write();dd($param);
-        if ($param->pass) return $this->result($param->code);
+        $validator = $this->bv->write();
+        if ($validator->pass) return $this->result($validator->code);
 
-        return $this->bc->write($param) ? $this->result(201) : $this->result(10000);
+        return $this->bc->write($validator) ? $this->result(201) : $this->result(10000);
     }
 }
