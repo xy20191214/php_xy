@@ -12,6 +12,7 @@ abstract class ValidatorBase
 
     public $need; // 需要的数组
     public $name; // 统一类名
+    public $dir; // 统一类名目录
     public $suffix = 'Validator'; // 后缀
 
     private $uid; // 用户id
@@ -24,6 +25,24 @@ abstract class ValidatorBase
     public function __construct()
     {
         $this->uid = 10000;
+    }
+
+
+    public function remove()
+    {
+        $namespce = $this->fullname();
+
+        return (new $namespce)->remove($this);
+    }
+
+    public function fullname()
+    {
+        return $this->repositoryNamespace($this->dir . '\\' . $this->name);
+    }
+
+    public function fullnameMysql()
+    {
+        return $this->mysqlNamespace($this->dir . '\\' . $this->name);
     }
 
     /**
@@ -61,7 +80,6 @@ abstract class ValidatorBase
         }
 
         $this->pass = false;
-
         foreach ($need as $k => $v)
             isset($this->ver->$v) and $this->need[$v] = $this->ver->$v;
 

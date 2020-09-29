@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Mysql;
+namespace App\Models\Mysql\Book;
 
 use Illuminate\Database\Eloquent\Model;
 

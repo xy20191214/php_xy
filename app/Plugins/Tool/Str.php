@@ -10,4 +10,9 @@ trait Str
     {
         return "\\App\\Models\\Mysql\\" . $str;
     }
+
+    public function repositoryNamespace($str)
+    {
+        return "\\App\\Models\\Repository\\" . $str;
+    }
 }

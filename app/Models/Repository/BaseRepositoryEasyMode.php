@@ -18,7 +18,7 @@ class BaseRepositoryEasyMode
     public function __construct($object)
     {
         $this->object = $object;
-        $namespace = $this->mysqlNamespace($object->name);
+        $namespace = $object->fullnameMysql();
         $this->model = new $namespace;
     }
 
@@ -66,13 +66,28 @@ class BaseRepositoryEasyMode
         if ($id)
         {
             $this->model = $this->first();
-            if (! $this->model) return false;
+            if (! $this->model) return 501;
         }
 
         foreach ($this->object->need as $k => $v)
             $this->model->$k = $v;
 
         return $this->model->save();
+    }
+
+    public function remove()
+    {
+        $id = $this->object->isId();
+
+        if ($id)
+        {
+            $this->model = $this->first();
+            if (! $this->model) return 501;
+        }
+
+        $this->model->status = -3;
+
+        return $this->model->save() ? $this->model : 501;
     }
 
     /**

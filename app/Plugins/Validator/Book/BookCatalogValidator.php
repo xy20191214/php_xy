@@ -7,6 +7,7 @@ use App\Plugins\Validator\ValidatorBase;
 
 class BookCatalogValidator extends ValidatorBase
 {
+    public $dir = "Book";
     public $name = "BookCatalog";
 
     /**
@@ -23,6 +24,6 @@ class BookCatalogValidator extends ValidatorBase
      */
     public function verId()
     {
-        return $this->must('id')->end('id')->remove();
+        return $this->must('id')->over('id');
     }
 }

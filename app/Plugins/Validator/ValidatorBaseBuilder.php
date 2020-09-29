@@ -27,11 +27,6 @@ class ValidatorBaseBuilder
         }
     }
 
-    public function remove()
-    {
-        dd($this->modelNamespace($this->name));
-    }
-
     /**
      * 长度
      * @param $key [键名]
@@ -70,7 +65,7 @@ class ValidatorBaseBuilder
     public function must(array $keys)
     {
         foreach ($keys as $v) {
-            if (!$this->notFlase($v)) return $this->end(1000);
+            if (! $this->notFlase($v)) return $this->end(1000);
         }
 
         return $this;

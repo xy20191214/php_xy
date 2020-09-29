@@ -4,7 +4,7 @@ namespace App\Models\Repository;
 
 class BaseRepository
 {
-    public $db = 'Mysql'; // 存储媒介种类
+    public $db; // 存储媒介种类
     public $where; // 条件
     public $params; // 参数
     /**

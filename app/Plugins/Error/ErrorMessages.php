@@ -6,6 +6,7 @@ class ErrorMessages
     // 基本错误
     const C_SUCCESS = 200;
     const C_NO_DATA = 404;
+    const C_SET_FAIL = 501;
 
     // 基本业务错误
     const C_PARAMS_ERROR = 1000;
@@ -21,7 +22,8 @@ class ErrorMessages
 
     // 错误信息
     const C_MESSAGE = [
-        self::C_SUCCESS => '请求成功',
+        self::C_SET_FAIL => '操作失败',
+        self::C_SUCCESS => '操作成功',
         self::C_NO_DATA => '请求失败',
         self::C_PARAMS_ERROR => '参数错误'
     ];

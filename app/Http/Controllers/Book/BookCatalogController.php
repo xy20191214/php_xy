@@ -27,9 +27,8 @@ class BookCatalogController extends BaseController
     {
         $validator = $this->bv->verId();
         if ($validator->pass) return $this->result($validator->code);
-        $validator->remove();
 
-        return 1;
+        return $this->judge($validator->remove());
     }
 
     public function write()
@@ -37,6 +36,6 @@ class BookCatalogController extends BaseController
         $validator = $this->bv->write();
         if ($validator->pass) return $this->result($validator->code);
 
-        return $this->bc->write($validator) ? $this->result(201) : $this->result(10000);
+        return $this->bc->write($validator) ? $this->result(201) : $this->result(501);
     }
 }
