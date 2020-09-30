@@ -27,19 +27,31 @@ abstract class ValidatorBase
         $this->uid = 10000;
     }
 
-
-    public function remove()
+    /**
+     * 调用仓库
+     * @param $method
+     * @return mixed
+     */
+    public function db($method)
     {
         $namespce = $this->fullname();
 
-        return (new $namespce)->remove($this);
+        return (new $namespce)->$method($this);
     }
 
+    /**
+     * 获取仓库命名空间全名
+     * @return string
+     */
     public function fullname()
     {
         return $this->repositoryNamespace($this->dir . '\\' . $this->name);
     }
 
+    /**
+     * 获取mysql模型命名空间全名
+     * @return string
+     */
     public function fullnameMysql()
     {
         return $this->mysqlNamespace($this->dir . '\\' . $this->name);
@@ -57,17 +69,27 @@ abstract class ValidatorBase
 
     /**
      * 获取uid
+     * @return int
      */
     public function isUid()
     {
         return $this->uid;
     }
 
+    /**
+     * 判断是否有错
+     * @return bool
+     */
     public function pass()
     {
         return $this->ver->pass ?? false;
     }
 
+    /**
+     * 结束方法
+     * @param mixed ...$need
+     * @return $this|Error
+     */
     public function over(...$need)
     {
         if ($this->pass())
@@ -88,14 +110,15 @@ abstract class ValidatorBase
 
     /**
      * 调整跳转方法
-     *
-     * @param ValidatorBaseBuilder
      * @param $method [方法名]
      * @param $params [参数]
      * @return $this
      */
     public function __call($method, $params)
     {
+        // 库操作
+        if (in_array($method, config('base.function'))) return $this->db($method);
+
         // pass参数为真，也就是有错直接返回本类
         if ($this->pass()) return $this;
 

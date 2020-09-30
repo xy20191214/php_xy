@@ -8,10 +8,10 @@ class ValidatorBaseBuilder
 {
     public $code; // 状态码
     public $pass = false; // 错误 false没错，true有错
-    private $name;
 
     public function __construct()
     {
+        // 获取request参数
         $this->params(request()->all());
     }
 
@@ -29,10 +29,8 @@ class ValidatorBaseBuilder
 
     /**
      * 长度
-     * @param $key [键名]
-     * @param $max [最大长度]
-     * @param $min [最小长度]
-     * @return $this
+     * @param array $param
+     * @return ValidatorBaseBuilder
      */
     public function length(array $param)
     {
@@ -46,8 +44,8 @@ class ValidatorBaseBuilder
 
     /**
      * 结束闭环增加工具方法
-     * @param $keys [keys需要的参数]
-     * @return ValidatorBase
+     * @param $code [错误码]
+     * @return ValidatorBaseBuilder
      */
     public function end($code)
     {

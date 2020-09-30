@@ -25,10 +25,12 @@ class BookCatalogController extends BaseController
 
     public function remove()
     {
+        // 验证
         $validator = $this->bv->verId();
         if ($validator->pass) return $this->result($validator->code);
 
-        return $this->judge($validator->remove());
+        // 执行与返回
+        return $this->httpsuccess($validator->remove());
     }
 
     public function write()
@@ -36,6 +38,6 @@ class BookCatalogController extends BaseController
         $validator = $this->bv->write();
         if ($validator->pass) return $this->result($validator->code);
 
-        return $this->bc->write($validator) ? $this->result(201) : $this->result(501);
+        return $this->httpsuccess($validator->alter());
     }
 }

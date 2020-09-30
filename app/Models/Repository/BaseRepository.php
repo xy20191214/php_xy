@@ -25,6 +25,12 @@ class BaseRepository
         return $this;
     }
 
+    /**
+     * @remark mode属性为选择模式
+     * @param $method
+     * @param $params
+     * @return BaseRepositoryEasyMode|bool
+     */
     public function __call($method, $params)
     {
         if ($this->mode) return $this->mode;

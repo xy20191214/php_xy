@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use App\Plugins\Error\CustomError;
 
@@ -51,11 +49,14 @@ class BaseController extends Controller
 
     /**
      * http状态码方式
+     * @remark http码不存在直接调用错误
      * @param int $code [201 204 404 500]
-     * @return ResponseFactory|Response
+     * @return string
      */
     public function httpsuccess(int $code = 201)
     {
+        if (! in_array($code, config('base.http.code'))) return $this->fail($code);
+
         return response('', $code);
     }
 

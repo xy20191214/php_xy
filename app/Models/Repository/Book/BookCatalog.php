@@ -14,17 +14,21 @@ class BookCatalog extends BaseRepository
      * @param $params
      * @return $this
      */
-    public function write($validator)
+    public function alter($validator)
     {
         // 状态:3-审核通过/2-审核中/1-待审核/0/-1-审核不通过/-2-封禁/-3-软删除
         return $this->cmn($validator) // 简易模式
             ->uid()
             ->id()
-            ->status(-3, '!=')
-            ->save();
+            ->soltDelete()
+            ->alter();
     }
 
-
+    /**
+     * 软删除
+     * @param $validator
+     * @return mixed
+     */
     public function remove($validator)
     {
         return $this->cmn($validator) // 简易模式
